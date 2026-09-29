@@ -107,28 +107,30 @@ flush privileges;      #刷新权限
 
 例如：目标端口是3306
 
-firewall-cmd --zone=public --add-port=3306/tcp --primanent    #对3306端口永久开放
+firewall-cmd --zone=public --add-port=3306/tcp --permanent    #对3306端口永久开放
 
 
 #######查看防火墙状态##############
 
 若遇到无法开启情况
-先用：systemctl unmask firewalld service
-然后：systemctl start firewalld service
+先用：systemctl unmask firewall service
+然后：systemctl start firewall service
 
 #######查看对外开放端口状态##########
 
+查询已开放的端口列表：firewall-cmd --zone=public --list-ports
+查询指定端口是否开放：netstat -apn | grep 端口号
+查询指定端口是否已开：firewall-cmd --query-port=666/tcp   #提示yes表开启，反之未开启。
 
 #######d对外开发端口########
 
-查看想开的端口是否已开：firewalld-cmd --query-port=123/tcp   #123为任意端口号
+查看想开的端口是否已开：firewall-cmd --query-port=123/tcp   #123为任意端口号
+添加指定需要开放的端口：firewall-cmd --query-port=123/tcp --permanent
+重载入添加的端口：firewall-cmd --reload
+查询指定端口是否开启成功：firewall-cmd --query-port=123/tcp
+移除指定端口：firewall-cmd --permanent --remove-port=123/tcp
 
-添加指定需要开放的端口：firewalld-cmd --query-port=123/tcp --permanent
 
-
-
-
-#######
 
 
 
